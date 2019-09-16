@@ -1,7 +1,7 @@
 name: Python application
 
 on: 
-  schedule: 3 17 * * *
+  schedule: 1 12 * * *
 
 jobs:
   build:
@@ -28,9 +28,3 @@ jobs:
     - name: Post to Instagram
       run: |
         python3 app.py ${{ secrets.user }} ${{ secrets.pass }}
-        
-    #- name: Post to Instagram
-     # uses: dreygur/NASA-Insta@master
-     # with:
-      #  username: ${{ secrets.user }}
-        #password: ${{ secrets.pass }}
