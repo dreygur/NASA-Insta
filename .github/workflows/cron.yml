@@ -7,10 +7,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
-    env:
-        user: ${{ secrets.user }}
-        pass: ${{ secrets.pass }}      
 
     steps:
     - uses: actions/checkout@v1
@@ -30,4 +26,4 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Post to Instagram
-      run: python3 app.py ${{ jobs.env.user }} ${{ jobs.env.pass }}
+      run: python3 app.py ${{ secrets.user }} ${{ secrets.pass }}
