@@ -7,10 +7,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    runs:
-      args:
-      - ${{ secrets.user }}
-      - ${{ secrets.pass }}
 
     steps:
     - uses: actions/checkout@v1
