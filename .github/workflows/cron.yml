@@ -26,9 +26,7 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Post to Instagram
-      uses: dreygur/NASA-Insta@master
+      run: python3 app.py
       with:
         user: ${{ secrets.user }}
-        pass: ${{ secrets.pass }}
-    - name: Execute
-      run: python3 app.py
+        pass: ${{ secrets.pass }}      
