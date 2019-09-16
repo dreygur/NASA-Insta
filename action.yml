@@ -1,0 +1,19 @@
+name: 'From NASA to Instagram'
+description: 'A simple Instagram bot that pulls data from api(dot)nasa(dot)gov and posts to instagram. Nothing special'
+author: 'Rakibul Yeasin'
+branding:
+  icon: ''
+  color: ''
+inputs: 
+  username:
+    description: username
+    required: true
+  password:
+    description: password
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    PLUGIN_USERNAME: ${{ inputs.username }}
+    PLUGIN_PASSWORD: ${{ inputs.password }}
