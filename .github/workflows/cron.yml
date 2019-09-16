@@ -33,4 +33,4 @@ jobs:
       with:
         user: ${{ secrets.user }}
         pass: ${{ secrets.pass }}
-      run: python3 app.py user pass
+      runs: python3 app.py user pass
