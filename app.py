@@ -19,7 +19,7 @@ insta_pass = ''
 data_locations = ["title", "url", "date", "copyright", "hdurl", "explanation", "media_type", "service_version"]
 
 # A Simple Credit Line
-credit = '\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/. This System is developed by @drreygur using the \'InstagramApi\' unofficial Instagram API.\n\nnInspired from @dailyastronomypicture'
+credit = '\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/. This System is developed by @drreygur using the \'InstagramApi\' unofficial Instagram API.\n\nInspired from @dailyastronomypicture'
 
 # Instagram required Image measurements
 max_width = 1080
@@ -88,10 +88,8 @@ def main(insta_name, insta_pass):
 
 if __name__ == '__main__':
     try:
-        # insta_name = str(input('Username: '))
-        # insta_pass = str(input('Password: '))
         main(sys.argv[1], sys.argv[2])
     except:
-        main(insta_name, insta_pass)
+        print("Please pass your `username` and `password`")
     sys.exit()
                       
