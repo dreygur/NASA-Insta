@@ -27,6 +27,6 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Post to Instagram
       run: python3 app.py
-      with:
+      env:
         user: ${{ secrets.user }}
         pass: ${{ secrets.pass }}      
