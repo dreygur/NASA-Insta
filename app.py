@@ -88,7 +88,9 @@ def main(insta_name, insta_pass):
 
 if __name__ == '__main__':
     try:
-        main(os.getenv('secrets.user'), os.getenv('secrets.pass'))
+        insta_name = str(input('Username: '))
+        insta_pass = str(input('Password: '))
+        main(insta_name, insta_pass)
     except:
         main(insta_name, insta_pass)
     sys.exit()
