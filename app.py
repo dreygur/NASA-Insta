@@ -88,9 +88,9 @@ def main(insta_name, insta_pass):
 
 if __name__ == '__main__':
     try:
-        insta_name = str(input('Username: '))
-        insta_pass = str(input('Password: '))
-        main(insta_name, insta_pass)
+        # insta_name = str(input('Username: '))
+        # insta_pass = str(input('Password: '))
+        main(sys.argv[1], sys.argv[2])
     except:
         main(insta_name, insta_pass)
     sys.exit()
