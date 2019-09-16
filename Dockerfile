@@ -1,4 +1,4 @@
-FROM plugins/base:latest
+FROM python:3.7-alpine
 
 LABEL "com.github.actions.name"="From NASA to Instagram"
 LABEL "com.github.actions.description"="A simple Instagram bot that pulls data from api(dot)nasa(dot)gov and posts to instagram. Nothing special"
