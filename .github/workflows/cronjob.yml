@@ -1,7 +1,7 @@
 name: Python application
 
-# on: "schedule(3 17 * * *)"
-on: [push]
+on: 
+  schedule: 3 17 * * *
 
 jobs:
   build:
