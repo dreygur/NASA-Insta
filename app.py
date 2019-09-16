@@ -1,3 +1,4 @@
+import os
 import sys
 import json
 import random
@@ -27,7 +28,7 @@ max_height = 1350
 # Tags for Instagram
 tags = ['#stars', '#astrophotography', '#telescope', '#physics', '#astronaut', '#blackhole', '#milkyway', '#cosmos', '#solarsystem', '#universe', '#galaxy', '#planets', '#earth', '#mars', '#nasa', '#astrophysics', '#space', '#spacex', '#astronomy', '#moon', '#science', '#cosmology', '#starsigns']
 
-def main():
+def main(insta_name, insta_pass):
     """
         Traditional main() function
     """
@@ -86,5 +87,8 @@ def main():
     insta.uploadPhoto(f'./{data["date"]}.jpg', caption=f"{data['title']}\n\n{data['explanation']}\n\nCredit: {data['copyright']}\n\n{credit}\n\n{tag}") # Pass Image location and caption
 
 if __name__ == '__main__':
-    main()
+    try:
+        main(os.getenv('secrets.user'), os.getenv('secrets.pass'))
+    except:
+        main(insta_name, insta_pass)
     sys.exit()
