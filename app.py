@@ -83,7 +83,7 @@ def main():
     # Post Image to Instagram
     insta = InstagramAPI(insta_name, insta_pass)
     insta.login() # Login to Instagram
-    insta.uploadPhoto(f'./{data["date"]}.jpg', caption=f'{data['title']}\n\n{data['explanation']}\n\nCredit: {data['copyright']}\n\n{credit}\n\n{tag}) # Pass Image location and caption
+    insta.uploadPhoto(f'./{data["date"]}.jpg', caption=f"{data['title']}\n\n{data['explanation']}\n\nCredit: {data['copyright']}\n\n{credit}\n\n{tag}") # Pass Image location and caption
 
 if __name__ == '__main__':
     main()
