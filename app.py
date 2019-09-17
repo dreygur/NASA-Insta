@@ -12,8 +12,8 @@ nasa_api_key = "NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo"
 nasa_uri = nasa_api + "planetary/apod?api_key=" + nasa_api_key
 
 # Instagram Details
-insta_name = ''
-insta_pass = ''
+# insta_name = ''
+# insta_pass = ''
 
 # Keys to get exact info from NASA-Dict
 data_locations = ["title", "url", "date", "copyright", "hdurl", "explanation", "media_type", "service_version"]
@@ -32,7 +32,7 @@ def main(insta_name, insta_pass):
     """
         Traditional main() function
     """
-
+    
     # Get data from NASA-API
     data = rq.get(nasa_uri).json()
 
@@ -42,7 +42,8 @@ def main(insta_name, insta_pass):
 
     # Print Some `Magic spells on Terminal`
     for key in data_locations:
-        print(f'{key}: {data[key]}')
+        if key in data:
+            print(f'{key}: {data[key]}')
     
     # Download and save image from NASA
     image = rq.get(data['hdurl'])
@@ -81,15 +82,24 @@ def main(insta_name, insta_pass):
     # Generate Tags
     tag = ''.join(random.choice(tags) + ' ' for _ in range(7))
 
+    # Caption for the post
+    caption_data = ''
+    if 'title' in data:
+        caption_data += data['title'] + '\n\n'
+    if 'explanation' in data:
+        caption_data += data['explanation'] + '\n\n'
+    if 'copyright' in data:
+        caption_data += data['copyright'] + '\n\n'
+    caption_data += credit + '\n\n' + tag
+
     # Post Image to Instagram
     insta = InstagramAPI(insta_name, insta_pass)
     insta.login() # Login to Instagram
-    insta.uploadPhoto(f'./{data["date"]}.jpg', caption=f"{data['title']}\n\n{data['explanation']}\n\nCredit: {data['copyright']}\n\n{credit}\n\n{tag}") # Pass Image location and caption
+    insta.uploadPhoto(f'./{data["date"]}.jpg', caption=caption_data) # Pass Image location and caption
 
 if __name__ == '__main__':
     try:
         main(sys.argv[1], sys.argv[2])
-    except:
-        print("Please pass your `username` and `password`")
+    except Exception as e:
+        print(e)
     sys.exit()
-                      
