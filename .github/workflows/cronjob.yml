@@ -2,7 +2,7 @@ name: Python application
 
 on: 
   schedule:
-  - cron: 5 7 * * *
+  - cron: 19 8 * * *
 
 jobs:
   build:
@@ -29,3 +29,5 @@ jobs:
     - name: Post to Instagram
       run: |
         python3 app.py ${{ secrets.user }} ${{ secrets.pass }}
+    - name: Git commit and push
+      uses: github-actions-x/commit@v1.0
