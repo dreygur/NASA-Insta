@@ -19,7 +19,7 @@ nasa_uri = nasa_api + "planetary/apod?api_key=" + nasa_api_key
 data_locations = ["title", "url", "date", "copyright", "hdurl", "explanation", "media_type", "service_version"]
 
 # A Simple Credit Line
-credit = '\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/. This System is developed by @drreygur using the \'InstagramApi\' unofficial Instagram API.\n\nInspired from @dailyastronomypicture'
+credit = '\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/. This System is developed by @drreygur using the \'LevPasha/InstagramApi\' unofficial Instagram API.\n\nInspired from @dailyastronomypicture'
 
 # Instagram required Image measurements
 max_width = 1080
@@ -27,6 +27,43 @@ max_height = 1350
 
 # Tags for Instagram
 tags = ['#stars', '#astrophotography', '#telescope', '#physics', '#astronaut', '#blackhole', '#milkyway', '#cosmos', '#solarsystem', '#universe', '#galaxy', '#planets', '#earth', '#mars', '#nasa', '#astrophysics', '#space', '#spacex', '#astronomy', '#moon', '#science', '#cosmology', '#starsigns']
+
+def img_resize(data):
+    """
+        Here starts the Image resizing Magic
+        Code copied from: https://djangosnippets.org/snippets/224/
+    """
+    # img = Image.open(f'./{data["date"]}.jpg')
+    img = Image.open('K218b_ESAKornmesser_6000' + '.jpg')
+    
+    src_width, src_height = img.size
+    src_ratio = float(src_width) / float(src_height)
+
+    if src_width > src_height:
+        # dst_width, dst_height = max_height, max_width
+        dst_width, dst_height = 2063, 1080
+    else:
+        dst_width, dst_height = max_width, max_height
+    dst_ratio = float(dst_width) / float(dst_height)
+    
+    # print(src_width, src_height, dst_width, dst_height, src_ratio, dst_ratio)
+    if dst_ratio < src_ratio:
+        crop_height = src_height
+        crop_width = crop_height * dst_ratio
+        x_offset = float(src_width - crop_width) / 2
+        y_offset = 0
+    else:
+        crop_width = src_width
+        crop_height = crop_width / dst_ratio
+        x_offset = 0
+        y_offset = float(src_height - crop_height) / 3
+    img = img.crop((x_offset, y_offset, x_offset+int(crop_width), y_offset+int(crop_height)))
+    img = img.resize((dst_width, dst_height), Image.ANTIALIAS)
+    img.save(f'./{data["date"]}.jpg')
+    # End Magic Code
+
+    # resize = im.crop((x_off, y_off, 600, 600)) #.resize((im.size[0]*5, im.size[1]*4))
+    # resize.save(f'./{data["date"]}.jpg')
 
 def main(insta_name, insta_pass):
     """
@@ -50,34 +87,8 @@ def main(insta_name, insta_pass):
     with open(f'{data["date"]}.jpg', 'wb') as img:
         img.write(image.content)
 
-    """
-        Here starts the Image resizing Magic
-        Code copied from: https://djangosnippets.org/snippets/224/
-    """
-    img = Image.open(f'./{data["date"]}.jpg')
-    
-    src_width, src_height = img.size
-    src_ratio = float(src_width) / float(src_height)
-    dst_width, dst_height = max_width, max_height
-    dst_ratio = float(dst_width) / float(dst_height)
-    
-    if dst_ratio < src_ratio:
-        crop_height = src_height
-        crop_width = crop_height * dst_ratio
-        x_offset = float(src_width - crop_width) / 2
-        y_offset = 0
-    else:
-        crop_width = src_width
-        crop_height = crop_width / dst_ratio
-        x_offset = 0
-        y_offset = float(src_height - crop_height) / 3
-    img = img.crop((x_offset, y_offset, x_offset+int(crop_width), y_offset+int(crop_height)))
-    img = img.resize((dst_width, dst_height), Image.ANTIALIAS)
-    img.save(f'./{data["date"]}.jpg')
-    # End Magic Code
-
-    # resize = im.crop((x_off, y_off, 600, 600)) #.resize((im.size[0]*5, im.size[1]*4))
-    # resize.save(f'./{data["date"]}.jpg')
+    # Resize the downloaded image
+    img_resize(data)
 
     # Generate Tags
     tag = ''.join(random.choice(tags) + ' ' for _ in range(7))
@@ -98,6 +109,7 @@ def main(insta_name, insta_pass):
     insta.uploadPhoto(f'./{data["date"]}.jpg', caption=caption_data) # Pass Image location and caption
 
 if __name__ == '__main__':
+    # img_resize(data={'date': '2019-09-17'})
     try:
         main(sys.argv[1], sys.argv[2])
     except Exception as e:
