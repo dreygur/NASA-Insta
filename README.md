@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="" src="./images/Banner.png">
+  <img alt="" style="{max-height: 50px}" src="./images/Banner.png">
 </p>
 
 # From NASA to Instagram
