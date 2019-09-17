@@ -2,7 +2,7 @@ name: Python application
 
 on: 
   schedule:
-  - cron: 19 8 * * *
+  - cron: 3 6 * * *
 
 jobs:
   build:
@@ -30,4 +30,4 @@ jobs:
       run: |
         python3 app.py ${{ secrets.user }} ${{ secrets.pass }}
     - name: Git commit and push
-      uses: github-actions-x/commit@v1.0
+      uses: github-actions-x/commit@v1.1
