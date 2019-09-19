@@ -2,7 +2,7 @@ name: Python application
 
 on: 
   schedule:
-  - cron: 11 8 * * *
+  - cron: 19 8 * * *
 
 jobs:
   build:
@@ -34,5 +34,5 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         push-branch: 'master'
-        commit-message: 'publish'
+        commit-message: 'Image Upload :mag:'
         force-add: 'true'
