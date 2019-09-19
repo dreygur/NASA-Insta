@@ -19,7 +19,7 @@ nasa_uri = nasa_api + "planetary/apod?api_key=" + nasa_api_key
 data_locations = ["title", "url", "date", "copyright", "hdurl", "explanation", "media_type", "service_version"]
 
 # A Simple Credit Line
-credit = '\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/. This System is developed by @drreygur using the \'LevPasha/InstagramApi\' unofficial Instagram API.\n\nInspired from @dailyastronomypicture'
+credit = '\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/ using Github Actions. This System is developed by @drreygur using the \'LevPasha/InstagramApi\' unofficial Instagram API.'
 
 # Instagram required Image measurements
 max_width = 1080
@@ -102,7 +102,7 @@ def main(insta_name, insta_pass):
     if 'explanation' in data:
         caption_data += data['explanation'] + '\n\n'
     if 'copyright' in data:
-        caption_data += data['copyright'] + '\n\n'
+        caption_data += 'Copyright: ' + data['copyright'] + '\n\n'
     caption_data += credit + '\n\n' + tag
 
     # Post Image to Instagram
