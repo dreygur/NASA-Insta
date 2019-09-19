@@ -2,7 +2,7 @@ name: Python application
 
 on: 
   schedule:
-  - cron: 3 6 * * *
+  - cron: 1 4 * * *
 
 jobs:
   build:
@@ -30,4 +30,9 @@ jobs:
       run: |
         python3 app.py ${{ secrets.user }} ${{ secrets.pass }}
     - name: Git commit and push
-      uses: github-actions-x/commit@v1.1
+      uses: github-actions-x/commit@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        push-branch: 'master'
+        commit-message: 'Image Upload :mag:'
+        force-add: 'true'

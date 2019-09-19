@@ -19,7 +19,7 @@ nasa_uri = nasa_api + "planetary/apod?api_key=" + nasa_api_key
 data_locations = ["title", "url", "date", "copyright", "hdurl", "explanation", "media_type", "service_version"]
 
 # A Simple Credit Line
-credit = '\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/ using Github Actions. This System is developed by @drreygur using the \'LevPasha/InstagramApi\' unofficial Instagram API.'
+credit = '\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/. This System is developed by @drreygur using the \'LevPasha/InstagramApi\' unofficial Instagram API.'
 
 # Instagram required Image measurements
 max_width = 1080
@@ -40,11 +40,12 @@ def img_resize(image_location):
     src_width, src_height = img.size
     src_ratio = float(src_width) / float(src_height)
 
-    if src_width > src_height:
+    if src_width < src_height:
         # dst_width, dst_height = max_height, max_width
-        dst_width, dst_height = 2063, 1080
-    else:
+        # dst_width, dst_height = 2063, 1080
         dst_width, dst_height = max_width, max_height
+    # else:
+        # dst_width, dst_height = max_width, max_height
     dst_ratio = float(dst_width) / float(dst_height)
     
     # print(src_width, src_height, dst_width, dst_height, src_ratio, dst_ratio)
