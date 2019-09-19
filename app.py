@@ -67,6 +67,10 @@ def img_resize(image_location):
     # resize = im.crop((x_off, y_off, 600, 600)) #.resize((im.size[0]*5, im.size[1]*4))
     # resize.save(f'./{data["date"]}.jpg')
 
+def save_image_location(date='', url='', hdurl=''):
+    with open('raw_images.txt', 'a') as location:
+        location.write(f'Date: {date}\n\tUrl: {url}\n\tHD_url: {hdurl}\n\n')
+
 def main(insta_name, insta_pass):
     """
         Traditional main() function
@@ -78,6 +82,9 @@ def main(insta_name, insta_pass):
     # Save the retrieved data in json format
     with open('nasa_data.json', 'a') as nasa:
         nasa.write(json.dumps(data, sort_keys=True, indent=4))
+
+    # Save Image Links to a Text file for future use
+    save_image_location(data['date'], data['url'], data['hdurl'])
 
     # Print Some `Magic spells on Terminal`
     for key in data_locations:
@@ -115,6 +122,10 @@ if __name__ == '__main__':
     # img_resize(data={'date': '2019-09-17'})
     try:
         main(sys.argv[1], sys.argv[2])
+        sys.exit(0)
+    except KeyboardInterrupt:
+        print('You choose to exit!')
+        sys.exit(0)
     except Exception as e:
         print(e)
-    sys.exit()
+        sys.exit(1)
