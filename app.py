@@ -33,10 +33,10 @@ def img_resize(image_location):
         Here starts the Image resizing Magic
         Code copied from: https://djangosnippets.org/snippets/224/
     """
-    
+
     img = Image.open(image_location)
     # img = Image.open('K218b_ESAKornmesser_6000' + '.jpg')
-    
+
     src_width, src_height = img.size
     src_ratio = float(src_width) / float(src_height)
 
@@ -44,10 +44,10 @@ def img_resize(image_location):
         # dst_width, dst_height = max_height, max_width
         # dst_width, dst_height = 2063, 1080
         dst_width, dst_height = max_width, max_height
-    # else:
-        # dst_width, dst_height = max_width, max_height
+    else:
+        dst_width, dst_height = max_width, max_height
     dst_ratio = float(dst_width) / float(dst_height)
-    
+
     # print(src_width, src_height, dst_width, dst_height, src_ratio, dst_ratio)
     if dst_ratio < src_ratio:
         crop_height = src_height
@@ -75,7 +75,7 @@ def main(insta_name, insta_pass):
     """
         Traditional main() function
     """
-    
+
     # Get data from NASA-API
     data = rq.get(nasa_uri).json()
 
@@ -90,7 +90,7 @@ def main(insta_name, insta_pass):
     for key in data_locations:
         if key in data:
             print(f'{key}: {data[key]}')
-    
+
     # Download and save image from NASA
     image = rq.get(data['hdurl'])
     image_location = f'./images/{data["date"]}.jpg'
