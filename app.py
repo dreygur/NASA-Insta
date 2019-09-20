@@ -45,7 +45,7 @@ def img_resize(image_location):
         # dst_width, dst_height = 2063, 1080
         dst_width, dst_height = max_width, max_height
     else:
-        dst_width, dst_height = max_width, max_height
+        dst_width, dst_height = max_height, max_width
     dst_ratio = float(dst_width) / float(dst_height)
 
     # print(src_width, src_height, dst_width, dst_height, src_ratio, dst_ratio)
