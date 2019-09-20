@@ -17,3 +17,7 @@ Date: 2019-09-20
 	HD_url: https://apod.nasa.gov/apod/image/1909/LastRingPortrait_Cassini_4472.jpg
 
 >>>>>>> 40c98cd132ceed1facbb12157e1e432ba83f641d
+Date: 2019-09-20
+	Url: https://apod.nasa.gov/apod/image/1909/LastRingPortrait_Cassini_1080.jpg
+	HD_url: https://apod.nasa.gov/apod/image/1909/LastRingPortrait_Cassini_4472.jpg
+
