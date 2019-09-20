@@ -43,7 +43,7 @@ def img_resize(image_location):
     if src_width > src_height:
         # dst_width, dst_height = max_height, max_width
         # dst_width, dst_height = 2063, 1080
-        dst_width, dst_height = src_width, src_height
+        dst_width, dst_height = src_width - 1080, src_height - 1080
     else:
         dst_width, dst_height = max_width, max_height
 
