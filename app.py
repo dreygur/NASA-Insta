@@ -4,6 +4,7 @@ import csv
 import json
 import random
 import requests as rq
+from tqdm import tqdm
 from PIL import Image
 from InstagramAPI import InstagramAPI
 
@@ -97,10 +98,20 @@ def main(insta_name, insta_pass):
 
     # Download and save image from NASA
     print("Downloading Image...")
-    image = rq.get(data['hdurl'])
+    # read 1024 bytes every time 
+    buffer_size = 1024
+    image = rq.get(data['hdurl'], stream=True)
+    # get the total file size
+    file_size = int(image.headers.get("Content-Length", 0))
+    # get the file name
+    filename = data['hdurl'].split("/")[-1]
     image_location = f'./images/{data["date"]}.jpg'
+    progress = tqdm(image.iter_content(buffer_size), f'Downloading {filename} as {data["date"]}.jpg', total=file_size, unit="B", unit_scale=True)
     with open(image_location, 'wb') as img:
-        img.write(image.content)
+        for data in progress:
+            image.write(data)
+            # img.write(image.content)
+            progress.update(len(data))
     print("Downloading Complete...")
 
     # Resize the downloaded image
