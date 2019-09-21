@@ -72,10 +72,6 @@ def img_resize(image_location):
 
     print("Cropping Success!!!")
 
-def save_image_location(date='', url='', hdurl=''):
-    with open('raw_images.md', 'a') as location:
-        location.write(f'Date: {date}\n\tUrl: {url}\n\tHD_url: {hdurl}\n\n')
-
 def main(insta_name, insta_pass):
     """
         Traditional main() function
@@ -93,9 +89,6 @@ def main(insta_name, insta_pass):
         d_data = csv.DictWriter(nasa, restval="-", fieldnames=data_locations)
         # d_data.writeheader()
         d_data.writerow(data)
-
-    # Save Image Links to a Text file for future use
-    save_image_location(data['date'], data['url'], data['hdurl'])
 
     # Print Some `Magic spells on Terminal`
     for key in data_locations:
