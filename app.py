@@ -140,7 +140,7 @@ def main(insta_name, insta_pass):
 if __name__ == '__main__':
     if len(sys.argv) > 3:
         print("Pass username and password!")
-git    else:
+    else:
         try:
             main(sys.argv[1], sys.argv[2])
             sys.exit(0)
