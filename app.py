@@ -90,8 +90,8 @@ def main(insta_name, insta_pass):
 
     # Save the retrieved data in csv format
     with open('nasa_data.csv', 'r+') as nasa:
-        d_data = csv.DictWriter(nasa, fieldnames=data_locations)
-        d_data.writeheader()
+        d_data = csv.DictWriter(nasa, restval="-", fieldnames=data_locations)
+        # d_data.writeheader()
         d_data.writerow(data)
 
     # Save Image Links to a Text file for future use
