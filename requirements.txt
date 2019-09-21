@@ -1,4 +1,4 @@
-requests
+requests==2.*
 beautifulsoup4
 InstagramApi
 Pillow
