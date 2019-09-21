@@ -48,7 +48,7 @@ data = [{
     "url": "https://apod.nasa.gov/apod/image/1909/Tulip_CropRobertEder1024.jpg"
 }]
 
-with open('nasa_data.csv', 'r+') as nasa:
+with open('nasa_data.csv', 'w') as nasa:
     d_data = csv.DictWriter(nasa, restval="-", fieldnames=data_locations)
     d_data.writeheader()
     d_data.writerows(data)

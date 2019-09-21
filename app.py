@@ -89,7 +89,7 @@ def main(insta_name, insta_pass):
     #     nasa.write(',' + json.dumps(data, sort_keys=True, indent=4))
 
     # Save the retrieved data in csv format
-    with open('nasa_data.csv', 'r+') as nasa:
+    with open('nasa_data.csv', 'a') as nasa:
         d_data = csv.DictWriter(nasa, restval="-", fieldnames=data_locations)
         # d_data.writeheader()
         d_data.writerow(data)

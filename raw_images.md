@@ -46,3 +46,7 @@ Date: 2019-09-21
 	Url: https://apod.nasa.gov/apod/image/1909/Tulip_CropRobertEder1024.jpg
 	HD_url: https://apod.nasa.gov/apod/image/1909/Tulip_CropRobertEder.jpg
 
+Date: 2019-09-21
+	Url: https://apod.nasa.gov/apod/image/1909/Tulip_CropRobertEder1024.jpg
+	HD_url: https://apod.nasa.gov/apod/image/1909/Tulip_CropRobertEder.jpg
+
