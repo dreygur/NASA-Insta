@@ -130,8 +130,6 @@ def main(insta_name, insta_pass):
         caption_data += 'Copyright: ' + data['copyright'] + '\n\n'
     caption_data += credit + '\n\n' + tag
 
-    print(caption_data)
-
     # Post Image to Instagram
     insta = InstagramAPI(insta_name, insta_pass)
     insta.login() # Login to Instagram
