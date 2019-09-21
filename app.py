@@ -1,11 +1,11 @@
 import os
-import csv
 import sys
+import csv
 import json
 import random
 import requests as rq
-from InstagramAPI import InstagramAPI
 from PIL import Image
+from InstagramAPI import InstagramAPI
 
 # NASA Details
 nasa_api = "https://api.nasa.gov/"
