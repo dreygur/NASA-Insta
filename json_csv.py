@@ -50,7 +50,7 @@ d_data = [{
 
 i = 1
 for data in d_data:
-    with open('nasa_data.csv', 'w') as nasa:
+    with open('nasa_data.csv', 'r+') as nasa:
         print(i)
         i += 1
         d_data = csv.DictWriter(nasa, restval="-", fieldnames=data_locations)
