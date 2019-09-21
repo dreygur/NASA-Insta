@@ -22,8 +22,8 @@ data_locations = ["title", "url", "date", "copyright", "hdurl", "explanation", "
 credit = '\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/. This System is developed by @drreygur using the \'LevPasha/InstagramApi\' unofficial Instagram API.'
 
 # Instagram required Image measurements
-max_width = 1080
-max_height = 1350
+max_width_pf = 1080
+max_height_pf = 1350
 
 # Tags for Instagram
 tags = ['#stars', '#astrophotography', '#telescope', '#physics', '#astronaut', '#blackhole', '#milkyway', '#cosmos', '#solarsystem', '#universe', '#galaxy', '#planets', '#earth', '#mars', '#nasa', '#astrophysics', '#space', '#spacex', '#astronomy', '#moon', '#science', '#cosmology', '#starsigns']
@@ -40,13 +40,18 @@ def img_resize(image_location):
     src_width, src_height = img.size
     src_ratio = float(src_width) / float(src_height)
 
-    if src_width > src_height:
-        # dst_width, dst_height = max_height, max_width
-        dst_width, dst_height = 2080, 1080
-    else:
-        dst_width, dst_height = max_width, max_height
+    if src_width > src_height: # Make it vertical
+        if src_ratio > 2:
+            dst_width, dst_height = 2080, src_height - (src_width - 2080) # Make the ratio as Instagram requires
+        else:
+            dst_width, dst_height = src_width, src_height # Let them be as they are!
+    else: # Make it Horizontal
+        dst_width, dst_height = max_width_pf, max_height_pf # Make the ratio as Instagram requires
 
+    # Find the ratio of desired size
     dst_ratio = float(dst_width) / float(dst_height)
+
+    print(f'\nHeight: {src_width}\nWidth: {src_height}\nSource Ratio: {src_ratio}\nTarget Ratio: {dst_ratio}\n')
 
     # print(src_width, src_height, dst_width, dst_height, src_ratio, dst_ratio)
     if dst_ratio < src_ratio:
@@ -64,11 +69,10 @@ def img_resize(image_location):
     img.save(image_location)
     # End Magic Code
 
-    # resize = im.crop((x_off, y_off, 600, 600)) #.resize((im.size[0]*5, im.size[1]*4))
-    # resize.save(f'./{data["date"]}.jpg')
+    print("Cropping Success!!!")
 
 def save_image_location(date='', url='', hdurl=''):
-    with open('raw_images.txt', 'a') as location:
+    with open('raw_images.md', 'a') as location:
         location.write(f'Date: {date}\n\tUrl: {url}\n\tHD_url: {hdurl}\n\n')
 
 def main(insta_name, insta_pass):
@@ -92,10 +96,12 @@ def main(insta_name, insta_pass):
             print(f'{key}: {data[key]}')
 
     # Download and save image from NASA
+    print("Downloading Image...")
     image = rq.get(data['hdurl'])
     image_location = f'./images/{data["date"]}.jpg'
     with open(image_location, 'wb') as img:
         img.write(image.content)
+    print("Downloading Complete...")
 
     # Resize the downloaded image
     img_resize(image_location)
@@ -119,13 +125,15 @@ def main(insta_name, insta_pass):
     insta.uploadPhoto(image_location, caption=caption_data) # Pass Image location and caption
 
 if __name__ == '__main__':
-    # img_resize(data={'date': '2019-09-17'})
-    try:
-        main(sys.argv[1], sys.argv[2])
-        sys.exit(0)
-    except KeyboardInterrupt:
-        print('You choose to exit!')
-        sys.exit(0)
-    except Exception as e:
-        print(e)
-        sys.exit(1)
+    if len(sys.argv) > 3:
+        print("Pass username and password!")
+    else:
+        try:
+            main(sys.argv[1], sys.argv[2])
+            sys.exit(0)
+        except KeyboardInterrupt:
+            print('You choose to exit!')
+            sys.exit(0)
+        except Exception as e:
+            print(e)
+            sys.exit(1)
