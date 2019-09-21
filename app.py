@@ -1,4 +1,5 @@
 import os
+import csv
 import sys
 import json
 import random
@@ -83,9 +84,15 @@ def main(insta_name, insta_pass):
     # Get data from NASA-API
     data = rq.get(nasa_uri).json()
 
-    # Save the retrieved data in json format
-    with open('nasa_data.json', 'a') as nasa:
-        nasa.write(json.dumps(data, sort_keys=True, indent=4))
+    # # Save the retrieved data in json format
+    # with open('nasa_data.json', 'a') as nasa:
+    #     nasa.write(',' + json.dumps(data, sort_keys=True, indent=4))
+
+    # Save the retrieved data in csv format
+    with open('nasa_data.csv', 'r+') as nasa:
+        d_data = csv.DictWriter(nasa, fieldnames=data_locations)
+        d_data.writeheader()
+        d_data.writerow(data)
 
     # Save Image Links to a Text file for future use
     save_image_location(data['date'], data['url'], data['hdurl'])
