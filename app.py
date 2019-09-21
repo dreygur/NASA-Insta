@@ -98,7 +98,7 @@ def main(insta_name, insta_pass):
 
     # Download and save image from NASA
     print("Downloading Image...")
-    # read 1024 bytes every time 
+    # read 1024 bytes every time
     buffer_size = 1024
     image = rq.get(data['hdurl'], stream=True)
     # get the total file size
@@ -108,10 +108,10 @@ def main(insta_name, insta_pass):
     image_location = f'./images/{data["date"]}.jpg'
     progress = tqdm(image.iter_content(buffer_size), f'Downloading {filename} as {data["date"]}.jpg', total=file_size, unit="B", unit_scale=True)
     with open(image_location, 'wb') as img:
-        for data in progress:
-            image.write(data)
+        for i_data in progress:
+            img.write(i_data)
             # img.write(image.content)
-            progress.update(len(data))
+            progress.update(len(i_data))
     print("Downloading Complete...")
 
     # Resize the downloaded image
@@ -130,6 +130,8 @@ def main(insta_name, insta_pass):
         caption_data += 'Copyright: ' + data['copyright'] + '\n\n'
     caption_data += credit + '\n\n' + tag
 
+    print(caption_data)
+
     # Post Image to Instagram
     insta = InstagramAPI(insta_name, insta_pass)
     insta.login() # Login to Instagram
@@ -138,7 +140,7 @@ def main(insta_name, insta_pass):
 if __name__ == '__main__':
     if len(sys.argv) > 3:
         print("Pass username and password!")
-    else:
+git    else:
         try:
             main(sys.argv[1], sys.argv[2])
             sys.exit(0)
