@@ -53,7 +53,7 @@ def img_resize(image_location):
     # Find the ratio of desired size
     dst_ratio = float(dst_width) / float(dst_height)
 
-    print(f'\nHeight: {src_width}\nWidth: {src_height}\nSource Ratio: {src_ratio}\nTarget Ratio: {dst_ratio}\n')
+    print(f'\nWidth: {src_width}\nHeight: {src_height}\nSource Ratio: {src_ratio}\nTarget Ratio: {dst_ratio}\n')
 
     # print(src_width, src_height, dst_width, dst_height, src_ratio, dst_ratio)
     if dst_ratio < src_ratio:
