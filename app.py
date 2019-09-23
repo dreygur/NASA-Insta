@@ -133,7 +133,12 @@ def main(insta_name, insta_pass):
     # Post Image to Instagram
     insta = InstagramAPI(insta_name, insta_pass)
     insta.login() # Login to Instagram
-    insta.uploadPhoto(image_location, caption=caption_data) # Pass Image location and caption
+    response = insta.uploadPhoto(image_location, caption=caption_data) # Pass Image location and caption
+    if response != False: # The method only returns `False` if it fails
+        print('Status Updated!')
+    else:
+        print('Image Upload Failed!')
+    insta.logout() # Logout fromInstagram
 
 if __name__ == '__main__':
     if len(sys.argv) > 3:
