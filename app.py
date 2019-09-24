@@ -30,6 +30,27 @@ max_height_pf = 1350
 # Tags for Instagram
 tags = ['#stars', '#astrophotography', '#telescope', '#physics', '#astronaut', '#blackhole', '#milkyway', '#cosmos', '#solarsystem', '#universe', '#galaxy', '#planets', '#earth', '#mars', '#nasa', '#astrophysics', '#space', '#spacex', '#astronomy', '#moon', '#science', '#cosmology', '#starsigns']
 
+"""
+    I have to disable printing on console as
+    a module is printing some text that I don't
+    need to show.
+    Actually, I had to... -_-
+"""
+def dprint():
+    """
+        Disables printing
+    """
+    sys.stdout = open(os.devnull, 'w')
+dprint() # Disable Output First
+
+def eprint(value=''):
+    """
+        Enables printing
+    """
+    sys.stdout = sys.__stdout__
+    print(value)
+    dprint()
+
 def img_resize(image_location):
     """
         Here starts the Image resizing Magic
@@ -53,7 +74,7 @@ def img_resize(image_location):
     # Find the ratio of desired size
     dst_ratio = float(dst_width) / float(dst_height)
 
-    print(f'\nWidth: {src_width}\nHeight: {src_height}\nSource Ratio: {src_ratio}\nTarget Ratio: {dst_ratio}\n')
+    eprint(f'\nWidth: {src_width}\nHeight: {src_height}\nSource Ratio: {src_ratio}\nTarget Ratio: {dst_ratio}\n')
 
     # print(src_width, src_height, dst_width, dst_height, src_ratio, dst_ratio)
     if dst_ratio < src_ratio:
@@ -71,7 +92,7 @@ def img_resize(image_location):
     img.save(image_location)
     # End Magic Code
 
-    print("Cropping Success!!!")
+    eprint("Cropping Success!!!")
 
 def main(insta_name, insta_pass):
     """
@@ -94,10 +115,10 @@ def main(insta_name, insta_pass):
     # Print Some `Magic spells on Terminal`
     for key in data_locations:
         if key in data:
-            print(f'{key}: {data[key]}')
+            eprint(f'{key}: {data[key]}')
 
     # Download and save image from NASA
-    print("Downloading Image...")
+    eprint("Downloading Image...")
     # read 1024 bytes every time
     buffer_size = 1024
     image = rq.get(data['hdurl'], stream=True)
@@ -112,7 +133,7 @@ def main(insta_name, insta_pass):
             img.write(i_data)
             # img.write(image.content)
             progress.update(len(i_data))
-    print("Downloading Complete...")
+    eprint("Downloading Complete...")
 
     # Resize the downloaded image
     img_resize(image_location)
@@ -134,22 +155,26 @@ def main(insta_name, insta_pass):
     insta = InstagramAPI(insta_name, insta_pass)
     insta.login() # Login to Instagram
     response = insta.uploadPhoto(image_location, caption=caption_data) # Pass Image location and caption
-    if response != False: # The method only returns `False` if it fails
-        print('Status Updated!')
+    if response == False:
+        # The method only returns `False` if it is Okay
+        # What a talent that developer has!
+        # -_-
+        
+        eprint('Status Updated!')
     else:
-        print('Image Upload Failed!')
+        eprint('Image Upload Failed!')
     insta.logout() # Logout fromInstagram
 
 if __name__ == '__main__':
     if len(sys.argv) > 3:
-        print("Pass username and password!")
+        eprint("Pass username and password!")
     else:
         try:
             main(sys.argv[1], sys.argv[2])
             sys.exit(0)
         except KeyboardInterrupt:
-            print('You choose to exit!')
+            eprint('You choose to exit!')
             sys.exit(0)
         except Exception as e:
-            print(e)
+            eprint(e)
             sys.exit(1)
