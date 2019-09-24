@@ -1,5 +1,5 @@
 requests==2.*
-beautifulsoup4
-InstagramApi
-Pillow
-tqdm
+beautifulsoup4==4.8.0
+InstagramAPI==1.0.2
+Pillow==6.1.0
+tqdm==4.*
