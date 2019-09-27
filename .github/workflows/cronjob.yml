@@ -1,8 +1,8 @@
-name: Python application
+name: Instagram Post
 
 on:
   schedule:
-  - cron: 30 8 * * *
+  - cron: 1 9 * * *
 
 jobs:
   build:
