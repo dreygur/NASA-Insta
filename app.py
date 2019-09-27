@@ -65,7 +65,7 @@ def img_resize(image_location):
 
     if src_width > src_height: # Make it vertical
         if src_ratio > 2:
-            dst_width, dst_height = 2080, src_height - (src_width - 2080) # Make the ratio as Instagram requires
+            dst_width, dst_height = 2080, src_height - 2080 # Make the ratio as Instagram requires
         else:
             dst_width, dst_height = src_width, src_height # Let them be as they are!
     else: # Make it Horizontal
