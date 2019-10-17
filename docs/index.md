@@ -5,10 +5,6 @@ description: A bot that pulls Image and some data from NASA prod-api api Post to
 
 ---
 
-<p align="center">
-  <img alt="" style="{max-height: 50px}" src="./images/Banner.png">
-</p>
-
 # From NASA to Instagram
 Don't panic! It's not a story of someone moving from NASA to Instagram.
 It is a simple Instagram bot that pulls data from api.nasa.gov and posts to instagram. Nothing special.

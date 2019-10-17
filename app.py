@@ -41,7 +41,7 @@ def dprint():
         Disables printing
     """
     sys.stdout = open(os.devnull, 'w')
-dprint() # Disable Output First
+# dprint() # Disable Output First
 
 def eprint(value=''):
     """
@@ -49,7 +49,7 @@ def eprint(value=''):
     """
     sys.stdout = sys.__stdout__
     print(value)
-    dprint()
+    # dprint()
 
 def img_resize(image_location):
     """
@@ -65,7 +65,7 @@ def img_resize(image_location):
 
     if src_width > src_height: # Make it vertical
         if src_ratio > 2:
-            dst_width, dst_height = 2080, src_height - 2080 # Make the ratio as Instagram requires
+            dst_width, dst_height = 1080,  int(src_height / (src_width / 1080)) # Make the ratio as Instagram requires
         else:
             dst_width, dst_height = src_width, src_height # Let them be as they are!
     else: # Make it Horizontal
@@ -74,7 +74,11 @@ def img_resize(image_location):
     # Find the ratio of desired size
     dst_ratio = float(dst_width) / float(dst_height)
 
-    eprint(f'\nWidth: {src_width}\nHeight: {src_height}\nSource Ratio: {src_ratio}\nTarget Ratio: {dst_ratio}\n')
+    img_data = f"""
+    \nSource Width: {src_width}\nSource Height: {src_height}\nSource Ratio: {src_ratio}
+    \nTarget Width: {dst_width}\nTarget Height: {dst_height}\nTarget Ratio: {dst_ratio}\n
+    """
+    eprint(f'{img_data}')
 
     # print(src_width, src_height, dst_width, dst_height, src_ratio, dst_ratio)
     if dst_ratio < src_ratio:
@@ -154,12 +158,12 @@ def main(insta_name, insta_pass):
     # Post Image to Instagram
     insta = InstagramAPI(insta_name, insta_pass)
     insta.login() # Login to Instagram
-    response = insta.uploadPhoto(image_location, caption=caption_data) # Pass Image location and caption
+    response = insta.uploadPhoto(image_location, caption=caption_data, is_sidecar=True) # Pass Image location and caption
     if response == False:
         # The method only returns `False` if it is Okay
         # What a talent that developer has!
         # -_-
-        
+
         eprint('Status Updated!')
     else:
         eprint('Image Upload Failed!')
