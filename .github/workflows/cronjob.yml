@@ -2,7 +2,8 @@ name: Instagram Post
 
 on:
   schedule:
-  - cron: 1 9 * * *
+  #- cron: 1 9 * * *
+  - cron: 46 6 * * *
 
 jobs:
   build:
