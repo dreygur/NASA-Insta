@@ -6,7 +6,8 @@ import random
 import requests as rq
 from tqdm import tqdm
 from PIL import Image
-from InstagramAPI import InstagramAPI
+# from InstagramAPI import InstagramAPI
+from instagram_private_api import Client, ClientCompatPatch
 
 # NASA Details
 nasa_api = "https://api.nasa.gov/"
@@ -156,19 +157,25 @@ def main(insta_name, insta_pass):
         caption_data += 'Copyright: ' + data['copyright'] + '\n\n'
     caption_data += credit + '\n\n' + tag
 
-    # Post Image to Instagram
-    insta = InstagramAPI(insta_name, insta_pass)
-    insta.login() # Login to Instagram
-    response = insta.uploadPhoto(image_location, caption=caption_data, upload_id=None) # Pass Image location and caption
-    if response == False:
-        # The method only returns `False` if it is Okay
-        # What a talent that developer has!
-        # -_-
+    # # Post Image to Instagram
+    # insta = InstagramAPI(insta_name, insta_pass)
+    # insta.login() # Login to Instagram
+    # response = insta.uploadPhoto(image_location, caption=caption_data, upload_id=None) # Pass Image location and caption
+    # if response == False:
+    #     # The method only returns `False` if it is Okay
+    #     # What a talent that developer has!
+    #     # -_-
 
-        eprint('Status Updated!')
-    else:
-        eprint('Image Upload Failed!')
-    insta.logout() # Logout fromInstagram
+    #     eprint('Status Updated!')
+    # else:
+    #     eprint('Image Upload Failed!')
+    # insta.logout() # Logout fromInstagram
+
+    # Post to Instagram using Private API
+    insta = Client(insta_name, insta_pass)
+    size = (1024, 683)
+    image = rq.get(data['hdurl'])
+    insta.post_photo(image.content, size=size, caption=caption)
 
 if __name__ == '__main__':
     if len(sys.argv) > 3:
