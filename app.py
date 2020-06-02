@@ -175,7 +175,8 @@ def main(insta_name, insta_pass):
     insta = Client(insta_name, insta_pass)
     size = (1024, 683)
     image = rq.get(data['hdurl'])
-    insta.post_photo(image.content, size=size, caption=caption_data)
+    result = insta.post_photo(image.content, size=size, caption=caption_data)
+    print(result.get("status"))
 
 if __name__ == '__main__':
     if len(sys.argv) > 3:
