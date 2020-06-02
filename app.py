@@ -159,7 +159,7 @@ def main(insta_name, insta_pass):
     # Post Image to Instagram
     insta = InstagramAPI(insta_name, insta_pass)
     insta.login() # Login to Instagram
-    response = insta.uploadPhoto(image_location, caption=caption_data, is_sidecar=True) # Pass Image location and caption
+    response = insta.uploadPhoto(image_location, caption=caption_data, upload_id=None) # Pass Image location and caption
     if response == False:
         # The method only returns `False` if it is Okay
         # What a talent that developer has!
