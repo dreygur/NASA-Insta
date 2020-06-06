@@ -2,12 +2,13 @@ import os
 import sys
 import csv
 import json
+import codecs
 import random
 import requests as rq
 from tqdm import tqdm
 from PIL import Image
 # from InstagramAPI import InstagramAPI
-from instagram_private_api import Client, ClientCompatPatch
+from instagram_private_api import Client, ClientCompatPatch, ClientError, ClientLoginError, ClientCookieExpiredError, ClientLoginRequiredError
 
 # NASA Details
 nasa_api = "https://api.nasa.gov/"
@@ -51,6 +52,25 @@ def eprint(value=''):
 	sys.stdout = sys.__stdout__
 	print(value)
 	# dprint()
+
+def to_json(python_object):
+	if isinstance(python_object, bytes):
+		return {'__class__': 'bytes',
+				'__value__': codecs.encode(python_object, 'base64').decode()}
+	raise TypeError(repr(python_object) + ' is not JSON serializable')
+
+
+def from_json(json_object):
+	if '__class__' in json_object and json_object['__class__'] == 'bytes':
+		return codecs.decode(json_object['__value__'].encode(), 'base64')
+	return json_object
+
+
+def onlogin_callback(api, new_settings_file):
+	cache_settings = api.settings
+	with open(new_settings_file, 'w') as outfile:
+		json.dump(cache_settings, outfile, default=to_json)
+		print('SAVED: {0!s}'.format(new_settings_file))
 
 def img_resize(image_location):
 	"""
@@ -171,11 +191,42 @@ def main(insta_name, insta_pass):
 	#     eprint('Image Upload Failed!')
 	# insta.logout() # Logout fromInstagram
 
+	try:
+		settings_file = "creds.json"
+		if not os.path.isfile(settings_file):
+			# settings file does not exist
+			print('Unable to find file: {0!s}'.format(settings_file))
+
+			# login new
+			api = Client(
+				insta_name, insta_pass,
+				on_login=lambda x: onlogin_callback(x, settings_file))
+		else:
+			with open(settings_file) as file_data:
+				cached_settings = json.load(file_data, object_hook=from_json)
+			print('Reusing settings: {0!s}'.format(settings_file))
+
+			device_id = cached_settings.get('device_id')
+			# reuse auth settings
+			api = Client(
+				insta_name, insta_pass,
+				settings=cached_settings)
+			
+	except (ClientCookieExpiredError, ClientLoginRequiredError) as e:
+		print('ClientCookieExpiredError/ClientLoginRequiredError: {0!s}'.format(e))
+
+		# Login expired
+		# Do relogin but use default ua, keys and such
+		api = Client(
+			insta_name, insta_pass,
+			device_id=device_id,
+			on_login=lambda x: onlogin_callback(x, args.settings_file_path))
+
 	# Post to Instagram using Private API
-	insta = Client(insta_name, insta_pass)
+	# insta = Client(insta_name, insta_pass)
 	size = (1024, 683)
 	image = rq.get(data['hdurl'])
-	result = insta.post_photo(image.content, size=size, caption=caption_data)
+	result = api.post_photo(image.content, size=size, caption=caption_data)
 	print(result.get("status"))
 	# Test
 
