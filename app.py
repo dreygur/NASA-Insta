@@ -220,7 +220,7 @@ def main(insta_name, insta_pass):
 		api = Client(
 			insta_name, insta_pass,
 			device_id=device_id,
-			on_login=lambda x: onlogin_callback(x, args.settings_file_path))
+			on_login=lambda x: onlogin_callback(x, settings_file))
 
 	# Post to Instagram using Private API
 	# insta = Client(insta_name, insta_pass)

@@ -8,16 +8,20 @@ import json
     May be not helpful for anyone else!
 """
 
-# Keys to get exact info from NASA-Dict
-data_locations = ["title", "url", "date", "copyright",
-                  "hdurl", "explanation", "media_type", "service_version"]
+def main():
+    # Keys to get exact info from NASA-Dict
+    data_locations = ["title", "url", "date", "copyright",
+                      "hdurl", "explanation", "media_type", "service_version"]
 
-with open('nasa_data.csv', 'w') as nasa:
-    with open('nasa_data.json', 'r') as json_data:
-        data = json_data.read()
-        # data = json.load(json_data)
-        data = ast.literal_eval(data)
-        print(type(data))
-        d_data = csv.DictWriter(nasa, restval="-", fieldnames=data_locations)
-        d_data.writeheader()
-        d_data.writerows(data)
+    with open('nasa_data_bak.csv', 'w') as nasa:
+        with open('nasa_data.json', 'r') as json_data:
+            data = json_data.read()
+            # data = json.load(json_data)
+            data = ast.literal_eval(data)
+            print(type(data))
+            d_data = csv.DictWriter(nasa, restval="-", fieldnames=data_locations)
+            d_data.writeheader()
+            d_data.writerows(data)
+
+if __name__ == "__main__":
+    main()
