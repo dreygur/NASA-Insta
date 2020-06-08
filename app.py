@@ -156,7 +156,7 @@ def main(insta_name, insta_pass):
 
 	# Post to Instagram using Private API
 	photo_data, photo_size = media.prepare_image(image_location, aspect_ratios=MediaRatios.standard)
-	result = api.post_photo(photo_data, photo_size, caption=caption_data)
+	# result = api.post_photo(photo_data, photo_size, caption=caption_data)
 
 if __name__ == '__main__':
 	if len(sys.argv) > 3:
