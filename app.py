@@ -9,7 +9,8 @@ from tqdm import tqdm
 from PIL import Image
 # from InstagramAPI import InstagramAPI
 from instagram_private_api import Client, ClientCompatPatch, ClientError, ClientLoginError, ClientCookieExpiredError, ClientLoginRequiredError
-
+from instagram_private_api import MediaRatios
+from instagram_private_api_extensions import media
 # NASA Details
 nasa_api = "https://api.nasa.gov/"
 nasa_api_key = "NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo"
@@ -24,10 +25,6 @@ data_locations = ["title", "url", "date", "copyright", "hdurl", "explanation", "
 
 # A Simple Credit Line
 credit = '\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/. This System is developed by @drreygur using the \'LevPasha/InstagramApi\' unofficial Instagram API.'
-
-# Instagram required Image measurements
-max_width_pf = 1080
-max_height_pf = 1350
 
 # Tags for Instagram
 tags = ['#stars', '#astrophotography', '#telescope', '#physics', '#astronaut', '#blackhole', '#milkyway', '#cosmos', '#solarsystem', '#universe', '#galaxy', '#planets', '#earth', '#mars', '#nasa', '#astrophysics', '#space', '#spacex', '#astronomy', '#moon', '#science', '#cosmology', '#starsigns']
@@ -72,54 +69,6 @@ def onlogin_callback(api, new_settings_file):
 		json.dump(cache_settings, outfile, default=to_json)
 		print('SAVED: {0!s}'.format(new_settings_file))
 
-def img_resize(image_location):
-	"""
-		Here starts the Image resizing Magic
-		Code copied from: https://djangosnippets.org/snippets/224/
-	"""
-
-	img = Image.open(image_location)
-	# img = Image.open('K218b_ESAKornmesser_6000' + '.jpg')
-
-	src_width, src_height = img.size
-	src_ratio = float(src_width) / float(src_height)
-
-	if src_width > src_height: # Make it vertical
-		if src_ratio > 2:
-			# dst_width, dst_height = 1080, int(src_height / (src_width / 1080)) # Make the ratio as Instagram requires
-			dst_width, dst_height = 1080, 540 # Make the ratio as Instagram requires
-		else:
-			dst_width, dst_height = src_width, src_height # Let them be as they are!
-	else: # Make it Horizontal
-		dst_width, dst_height = max_width_pf, max_height_pf # Make the ratio as Instagram requires
-
-	# Find the ratio of desired size
-	dst_ratio = float(dst_width) / float(dst_height)
-
-	img_data = f"""
-	\nSource Width: {src_width}\nSource Height: {src_height}\nSource Ratio: {src_ratio}
-	\nTarget Width: {dst_width}\nTarget Height: {dst_height}\nTarget Ratio: {dst_ratio}\n
-	"""
-	eprint(f'{img_data}')
-
-	# print(src_width, src_height, dst_width, dst_height, src_ratio, dst_ratio)
-	if dst_ratio < src_ratio:
-		crop_height = src_height
-		crop_width = crop_height * dst_ratio
-		x_offset = float(src_width - crop_width) / 2
-		y_offset = 0
-	else:
-		crop_width = src_width
-		crop_height = crop_width / dst_ratio
-		x_offset = 0
-		y_offset = float(src_height - crop_height) / 3
-	img = img.crop((x_offset, y_offset, x_offset+int(crop_width), y_offset+int(crop_height)))
-	img = img.resize((dst_width, dst_height), Image.ANTIALIAS)
-	img.save(image_location)
-	# End Magic Code
-
-	eprint("Cropping Success!!!")
-
 def main(insta_name, insta_pass):
 	"""
 		Traditional main() function
@@ -161,9 +110,6 @@ def main(insta_name, insta_pass):
 			progress.update(len(i_data))
 	eprint("Downloading Complete...")
 
-	# Resize the downloaded image
-	img_resize(image_location)
-
 	# Generate Tags
 	tag = ''.join(random.choice(tags) + ' ' for _ in range(7))
 
@@ -177,25 +123,11 @@ def main(insta_name, insta_pass):
 		caption_data += 'Copyright: ' + data['copyright'] + '\n\n'
 	caption_data += credit + '\n\n' + tag
 
-	# # Post Image to Instagram
-	# insta = InstagramAPI(insta_name, insta_pass)
-	# insta.login() # Login to Instagram
-	# response = insta.uploadPhoto(image_location, caption=caption_data, upload_id=None) # Pass Image location and caption
-	# if response == False:
-	#     # The method only returns `False` if it is Okay
-	#     # What a talent that developer has!
-	#     # -_-
-
-	#     eprint('Status Updated!')
-	# else:
-	#     eprint('Image Upload Failed!')
-	# insta.logout() # Logout fromInstagram
-
 	try:
 		settings_file = "creds.json"
 		if not os.path.isfile(settings_file):
 			# settings file does not exist
-			print('Unable to find file: {0!s}'.format(settings_file))
+			eprint('Unable to find file: {0!s}'.format(settings_file))
 
 			# login new
 			api = Client(
@@ -204,7 +136,7 @@ def main(insta_name, insta_pass):
 		else:
 			with open(settings_file) as file_data:
 				cached_settings = json.load(file_data, object_hook=from_json)
-			print('Reusing settings: {0!s}'.format(settings_file))
+			eprint('Reusing settings: {0!s}'.format(settings_file))
 
 			device_id = cached_settings.get('device_id')
 			# reuse auth settings
@@ -213,7 +145,7 @@ def main(insta_name, insta_pass):
 				settings=cached_settings)
 			
 	except (ClientCookieExpiredError, ClientLoginRequiredError) as e:
-		print('ClientCookieExpiredError/ClientLoginRequiredError: {0!s}'.format(e))
+		eprint('ClientCookieExpiredError/ClientLoginRequiredError: {0!s}'.format(e))
 
 		# Login expired
 		# Do relogin but use default ua, keys and such
@@ -223,12 +155,8 @@ def main(insta_name, insta_pass):
 			on_login=lambda x: onlogin_callback(x, settings_file))
 
 	# Post to Instagram using Private API
-	# insta = Client(insta_name, insta_pass)
-	size = (1024, 683)
-	image = rq.get(data['hdurl'])
-	result = api.post_photo(image.content, size=size, caption=caption_data)
-	print(result.get("status"))
-	# Test
+	photo_data, photo_size = media.prepare_image(image_location, aspect_ratios=MediaRatios.standard)
+	result = api.post_photo(photo_data, photo_size, caption=caption_data)
 
 if __name__ == '__main__':
 	if len(sys.argv) > 3:
