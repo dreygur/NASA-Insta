@@ -7,6 +7,7 @@ import random
 import requests as rq
 from tqdm import tqdm
 from PIL import Image
+
 # from InstagramAPI import InstagramAPI
 from instagram_private_api import Client, ClientCompatPatch, ClientError, ClientLoginError, ClientCookieExpiredError, ClientLoginRequiredError
 from instagram_private_api import MediaRatios
@@ -92,23 +93,23 @@ def main(insta_name, insta_pass):
 		if key in data:
 			eprint(f'{key}: {data[key]}')
 
-	# Download and save image from NASA
-	eprint("Downloading Image...")
-	# read 1024 bytes every time
-	buffer_size = 1024
-	image = rq.get(data['hdurl'], stream=True)
-	# get the total file size
-	file_size = int(image.headers.get("Content-Length", 0))
-	# get the file name
-	filename = data['hdurl'].split("/")[-1]
-	image_location = f'./images/{data["date"]}.jpg'
-	progress = tqdm(image.iter_content(buffer_size), f'Downloading {filename} as {data["date"]}.jpg', total=file_size, unit="B", unit_scale=True)
-	with open(image_location, 'wb') as img:
-		for i_data in progress:
-			img.write(i_data)
-			# img.write(image.content)
-			progress.update(len(i_data))
-	eprint("Downloading Complete...")
+	# # Download and save image from NASA
+	# eprint("Downloading Image...")
+	# # read 1024 bytes every time
+	# buffer_size = 1024
+	# image = rq.get(data['hdurl'], stream=True)
+	# # get the total file size
+	# file_size = int(image.headers.get("Content-Length", 0))
+	# # get the file name
+	# filename = data['hdurl'].split("/")[-1]
+	# image_location = f'./images/{data["date"]}.jpg'
+	# progress = tqdm(image.iter_content(buffer_size), f'Downloading {filename} as {data["date"]}.jpg', total=file_size, unit="B", unit_scale=True)
+	# with open(image_location, 'wb') as img:
+	# 	for i_data in progress:
+	# 		img.write(i_data)
+	# 		# img.write(image.content)
+	# 		progress.update(len(i_data))
+	# eprint("Downloading Complete...")
 
 	# Generate Tags
 	tag = ''.join(random.choice(tags) + ' ' for _ in range(7))
@@ -143,7 +144,7 @@ def main(insta_name, insta_pass):
 			api = Client(
 				insta_name, insta_pass,
 				settings=cached_settings)
-			
+
 	except (ClientCookieExpiredError, ClientLoginRequiredError) as e:
 		eprint('ClientCookieExpiredError/ClientLoginRequiredError: {0!s}'.format(e))
 
@@ -155,8 +156,10 @@ def main(insta_name, insta_pass):
 			on_login=lambda x: onlogin_callback(x, settings_file))
 
 	# Post to Instagram using Private API
+	image_location = './images/2020-06-08.jpg'
 	photo_data, photo_size = media.prepare_image(image_location, aspect_ratios=MediaRatios.standard)
-	# result = api.post_photo(photo_data, photo_size, caption=caption_data)
+	result = api.post_photo(photo_data, photo_size, caption=caption_data)
+	print(result)
 
 if __name__ == '__main__':
 	if len(sys.argv) > 3:
