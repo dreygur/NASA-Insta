@@ -1,3 +1,2 @@
-.pycache
-./images/Thumbs.db
-venv/*
+node_modules/*
+*.env

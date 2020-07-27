@@ -1,0 +1,17 @@
+{
+  "name": "nasa-instagram",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "instagram-web-api": "git+https://github.com/codexJoin/instagram-web-api.git",
+    "node-fetch": "^2.6.0",
+    "npm-check-updates": "^7.0.2",
+    "tough-cookie-filestore2": "^1.0.0"
+  }
+}
