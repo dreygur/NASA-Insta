@@ -25,13 +25,7 @@ const getData = async url => {
     }
 }
 
-// getData(api).then(res => {
-//     console.log(res);
-// })
-
 getData(api).then(res => {
-    // console.log(res.hdurl);
-
     var data = res;
     let credit = '\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/. This System is developed by @drreygur using the \'LevPasha/InstagramApi\' unofficial Instagram API.';
     let tags = ['#stars', '#astrophotography', '#telescope', '#physics', '#astronaut', '#blackhole', '#milkyway', '#cosmos', '#solarsystem', '#universe', '#galaxy', '#planets', '#earth', '#mars', '#nasa', '#astrophysics', '#space', '#spacex', '#astronomy', '#moon', '#science', '#cosmology', '#starsigns'];
@@ -57,8 +51,5 @@ getData(api).then(res => {
         });
         console.log(res);
     }
-
     post(data);
-
-
 })
