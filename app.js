@@ -1,9 +1,13 @@
-const Instagram = require('instagram-web-api');
+// const Instagram = require('instagram-web-api');
+const Instagram = require('./Instagram')
 const FileCookieStore = require('tough-cookie-filestore2');
 const fetch = require('node-fetch');
 
-const username = "astronomyimages";
-const password = "";
+// const username = "astronomyimages";
+// const password = "";
+
+const username = process.argv[1];
+const password = process.argv[2];
 
 const cookieStore = new FileCookieStore('./cookies.json');
 const client = new Instagram({ username, password, cookieStore });
