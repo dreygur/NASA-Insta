@@ -1,10 +1,10 @@
 name: Instagram Post
 
 on:
-  push:
-    branches: js-dev
-#   schedule:
-#   - cron: 36 9 * * *
+#   push:
+#     branches: js-dev
+  schedule:
+  - cron: 45 12 * * *
 
 jobs:
   build:
@@ -13,6 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+      with:
+          ref: js-dev
     - name: github-actions-nodejs
       uses: thonatos/github-actions-nodejs@v0.1.1
     - name: Post to Instagram
