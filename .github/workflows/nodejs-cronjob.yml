@@ -1,1 +1,27 @@
+name: Instagram Post
 
+on:
+  # push:
+    # branches: master
+  schedule:
+  - cron: 36 9 * * *
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: github-actions-nodejs
+      uses: thonatos/github-actions-nodejs@v0.1.1
+    - name: Post to Instagram
+      run: |
+        node app.js ${{ secrets.user }} ${{ secrets.pass }}
+    - name: Git commit and push
+      uses: github-actions-x/commit@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        push-branch: 'master'
+        commit-message: 'Image Upload :mag:'
+        force-add: 'true'
