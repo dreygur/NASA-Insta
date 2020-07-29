@@ -1,10 +1,10 @@
-name: Instagram Post
+name: Instagram Post JS
 
 on:
 #   push:
 #     branches: js-dev
   schedule:
-  - cron: 31 10 * * *
+  - cron: 27 10 * * *
 
 jobs:
   build:
