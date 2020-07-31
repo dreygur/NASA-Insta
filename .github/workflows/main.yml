@@ -16,10 +16,9 @@ jobs:
       with:
           ref: js-dev
     - name: github-actions-nodejs
-      uses: Slishee/gh-actions-nodejs@v0.1.2
-    - name: Post to Instagram
+      uses: thonatos/github-actions-nodejs@v0.1.1    - name: Post to Instagram
       run: |
-        yarn
+        npm install
         node app.js ${{ secrets.user }} ${{ secrets.pass }}
     - name: Git commit and push
       uses: github-actions-x/commit@master
