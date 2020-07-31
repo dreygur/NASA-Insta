@@ -16,7 +16,7 @@ jobs:
       with:
           ref: js-dev
     - name: gh-actions-nodejs
-      uses: Slishee/gh-actions-nodejs@0.0.2
+      uses: Slishee/gh-actions-nodejs@master
     - name: Post to Instagram
       run: |
         yarn
