@@ -4,7 +4,7 @@ on:
 #   push:
 #     branches: js-dev
   schedule:
-  - cron: 27 10 * * *
+  - cron: 47 5 * * *
 
 jobs:
   build:
@@ -16,10 +16,10 @@ jobs:
       with:
           ref: js-dev
     - name: github-actions-nodejs
-      uses: thonatos/github-actions-nodejs@v0.1.1
+      uses: Slishee/gh-actions-nodejs@v0.1.2
     - name: Post to Instagram
       run: |
-        npm install
+        yarn
         node app.js ${{ secrets.user }} ${{ secrets.pass }}
     - name: Git commit and push
       uses: github-actions-x/commit@master
