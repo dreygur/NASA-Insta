@@ -4,7 +4,7 @@ on:
 #   push:
 #     branches: js-dev
   schedule:
-  - cron: 5 6 * * *
+  - cron: 21 6 * * *
 
 jobs:
   build:
@@ -16,7 +16,8 @@ jobs:
       with:
           ref: js-dev
     - name: github-actions-nodejs
-      uses: thonatos/github-actions-nodejs@v0.1.1    - name: Post to Instagram
+      uses: thonatos/github-actions-nodejs@v0.1.1    
+    - name: Post to Instagram
       run: |
         npm install
         node app.js ${{ secrets.user }} ${{ secrets.pass }}
