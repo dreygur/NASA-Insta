@@ -4,7 +4,7 @@ on:
 #   push:
 #     branches: js-dev
   schedule:
-  - cron: 56 6 * * *
+  - cron: 3 8 * * *
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
       with:
           ref: js-dev
     - name: gh-actions-nodejs
-      uses: Slishee/gh-actions-nodejs@0.0.1
+      uses: Slishee/gh-actions-nodejs@0.0.2
     - name: Post to Instagram
       run: |
         yarn
