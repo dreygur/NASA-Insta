@@ -2,7 +2,7 @@
   <img alt="" style="{max-height: 50px}" src="./images/Banner.png">
 </p>
 
-# From NASA to Instagram ![Instagram Post](https://github.com/dreygur/NASA-Insta/workflows/Instagram%20Post/badge.svg)
+# From NASA to Instagram ![Instagram Post](https://github.com/dreygur/NASA-Insta/workflows/Instagram%20Post%20JS/badge.svg)
 Don't panic! It's not a story of someone moving from NASA to Instagram.
 It is a simple Instagram bot that pulls data from api.nasa.gov and posts to instagram. Nothing special.
 
