@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="" style="{max-height: 50px}" src="./images/Banner.png">
+  <img alt="" style="{max-height: 50px}" src="https://github.com/dreygur/NASA-Insta/raw/main/images/Banner.png">
 </p>
 
 # From NASA to Instagram ![Instagram Post](https://github.com/dreygur/NASA-Insta/workflows/Instagram%20Post%20JS/badge.svg)
