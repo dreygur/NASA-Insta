@@ -4,7 +4,7 @@ on:
 #   push:
 #     branches: js-dev
   schedule:
-  - cron: 54 5 * * *
+  - cron: 5 6 * * *
 
 jobs:
   build:
