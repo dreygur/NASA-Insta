@@ -74,10 +74,10 @@ getData(api).then(res => {
 
     post(data, tags);
 
-    let imgExt = data.hdurl.split('.');
-    imgExt = imgExt[imgExt.length - 1];
+    // let imgExt = data.hdurl.split('.');
+    // imgExt = imgExt[imgExt.length - 1];
 
-    download(data.hdurl, `./Images/${data.date}.${imgExt}`, () => {
-        console.log('[+] Done!');
-    });
+    // download(data.hdurl, `./Images/${data.date}.${imgExt}`, () => {
+    //     console.log('[+] Done!');
+    // });
 })
