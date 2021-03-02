@@ -40,15 +40,24 @@ const getData = async url => {
 getData(api).then(res => {
     var data = res;
     let credit = '\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/. This System is developed by @drreygur';
-    let tags = ['#stars', '#astrophotography', '#telescope', '#physics', '#astronaut', '#blackhole', '#milkyway', '#cosmos', '#solarsystem', '#universe', '#galaxy', '#planets', '#earth', '#mars', '#nasa', '#astrophysics', '#space', '#spacex', '#astronomy', '#moon', '#science', '#cosmology', '#starsigns'];
-
-    var mTags = (tags, n) => {
-      tag = "";
-        for(var i=0; i < n; i++) {
-            tag += tags[Math.floor(Math.random() * tags.length)] + " ";
-      }
-        return tag;
-    }
+    /* let tags = [
+                "#dailyastronomy", "#astronomy",
+                "#space", "#nasa", "#universe", "#astrophotography", "#science", "#cosmos", "#moon", "#stars",
+                "#galaxy", "#astrophysics", "#nightsky", "#photography", "#physics", "#milkyway", "#spacex", "#cosmology",
+                "#astro", "#earth", "#astronomia", "#sky", "#nature", "#telescope", "#astronaut", "#nightphotography",
+                "#solarsystem", "#night", "#planets", "#mars", "#bhfyp"
+               ]; */
+    
+    let mTags = "#astronomy #space #nasa #universe #astrophotography #science #cosmos #moon #stars #galaxy #astrophysics #nightsky #photography #physics #milkyway #spacex #cosmology #astro #earth #astronomia #sky #nature #telescope #astronaut #nightphotography #solarsystem #night #planets #mars #bhfyp"
+    
+    
+//     var mTags = (tags, n) => {
+//       tag = "";
+//         for(var i=0; i < n; i++) {
+//             tag += tags[Math.floor(Math.random() * tags.length)] + " ";
+//       }
+//         return tag;
+//     }
 
     var post = async (data, tags) => {
         console.log(data);
