@@ -59,7 +59,7 @@ getData(api).then(res => {
 //         return tag;
 //     }
 
-    var post = async (data, tags) => {
+    var post = async (data, mTags) => {
         console.log(data);
         await client.login();
 
@@ -70,7 +70,8 @@ getData(api).then(res => {
         if (data.explanation) caption += data.explanation + '\n\n';
         if (data.copyright) caption += 'Copyright ' + data.copyright + '\n\n';
         caption += credit + '\n\n';
-        caption += mTags(tags, 8);
+        // caption += mTags(tags, 8);
+        caption += mTags;
 
         let {
             res
