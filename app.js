@@ -82,7 +82,7 @@ getData(api).then(res => {
         console.log(res);
     }
 
-    post(data, tags);
+    post(data, mTags);
 
     // let imgExt = data.hdurl.split('.');
     // imgExt = imgExt[imgExt.length - 1];
