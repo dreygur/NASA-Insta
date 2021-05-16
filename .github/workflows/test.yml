@@ -1,4 +1,4 @@
-name: Instagram Post
+name: Instagram Post Test
 
 on:
   schedule:
