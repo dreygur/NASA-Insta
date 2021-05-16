@@ -12,7 +12,7 @@ jobs:
       with:
           ref: js-dev
     - name: Github Actions Yarn
-      uses: dreygur/github-actions-yarn@0.0.1
+      uses: dreygur/github-actions-yarn@0.0.4
     - name: Post to Instagram
       run: |
         yarn
