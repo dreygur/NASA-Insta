@@ -2,7 +2,7 @@ name: Instagram Post Test
 
 on:
   schedule:
-  - cron: 8 4 * * *
+  - cron: 18 24 * * *
 
 jobs:
   build:
