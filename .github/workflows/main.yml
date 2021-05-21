@@ -3,6 +3,7 @@ name: Instagram Post
 on:
   schedule:
   - cron: 8 4 * * *
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,7 +18,7 @@ jobs:
       uses: dreygur/github-actions-yarn@1.0.1
     - name: Post to Instagram
       run: |
-        npm install
+        yarn
         node app.js ${{ secrets.user }} ${{ secrets.pass }}
     - name: Git commit and push
       uses: github-actions-x/commit@master
