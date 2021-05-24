@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "run": "node app.js",
     "test": "node app.js"
   },
   "author": "",
