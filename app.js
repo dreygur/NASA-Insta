@@ -10,7 +10,7 @@ const username = process.argv[1];
 const password = process.argv[2];
 
 // Saving Cookies for skipping login next time
-const cookieStore = new FileCookieStore(path.join('./', 'cookies.json');
+const cookieStore = new FileCookieStore(path.join('./', 'cookies.json'));
 const client = new Instagram({ username, password, cookieStore });
 
 // Nasa API
