@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
       with:
-          ref: js-dev
+          ref: javascript
     - name: Github Actions Yarn
       uses: dreygur/github-actions-yarn@1.0.1
     - name: Post to Instagram
