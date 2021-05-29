@@ -19,7 +19,7 @@ jobs:
     - name: Post to Instagram
       run: |
         yarn
-        node app.js ${{ secrets.user }} ${{ secrets.pass }}
+        node app.js ${{ secrets.user }} ${{ secrets.pass }} --trace-warnings
     - name: Git commit and push
       uses: github-actions-x/commit@master
       with:
