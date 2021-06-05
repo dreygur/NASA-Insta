@@ -1,4 +1,5 @@
-const Instagram = require('./Instagram')
+// const Instagram = require('./Instagram')
+const Instagram = require('instagram-web-api')
 const FileCookieStore = require('tough-cookie-filestore2');
 const fetch = require('node-fetch');
 const fs = require('fs');
@@ -58,11 +59,11 @@ getData(api).then(res => {
 
         let {
             res
-        } = await client.uploadPhoto({
+        } =  await client.uploadPhoto({
             photo,
             caption: caption
         });
-        console.log(res);
+        console.log(res.code);
     }
 
     // Post to Insta

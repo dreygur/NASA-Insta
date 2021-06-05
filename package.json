@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "instagram-web-api": "git+https://github.com/codexJoin/instagram-web-api.git",
+    "instagram-web-api": "^2.2.2",
     "node-fetch": "^2.6.0",
     "npm-check-updates": "^7.0.2",
     "request": "^2.88.2",
