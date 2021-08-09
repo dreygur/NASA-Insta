@@ -8,9 +8,9 @@
     "test": "node app.js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "instagram-web-api": "^2.2.2",
+    "instagram-private-api": "^1.45.1",
     "node-fetch": "^2.6.0",
     "npm-check-updates": "^7.0.2",
     "request": "^2.88.2",
