@@ -4,16 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run": "node app.js",
-    "test": "node app.js"
+    "run": "node index.js",
+    "test": "./node_modules/.bin/env-cmd node index.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "instagram-private-api": "^1.45.1",
-    "node-fetch": "^2.6.0",
-    "npm-check-updates": "^7.0.2",
-    "request": "^2.88.2",
+    "axios": "^0.25.0",
+    "instagram-web-api": "^2.2.2",
+    "sharp": "^0.30.0",
     "tough-cookie-filestore2": "^1.0.0"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint": "^8.8.0"
   }
 }

@@ -4,25 +4,28 @@ on:
   schedule:
   - cron: 10 7 * * *
 
+env:
+  INSTAGRAM_USERNAME: ${{ secrets.user }}
+  INSTAGRAM_PASSWORD: ${{ secrets.pass }}
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
       with:
-          ref: js-dev
+        ref: js-dev
     - name: gh-actions-nodejs
       uses: Slishee/gh-actions-nodejs@0.0.2
     - name: Post to Instagram
       run: |
         yarn
-        node app.js ${{ secrets.user }} ${{ secrets.pass }}
-    - name: Git commit and push
-      uses: github-actions-x/commit@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        push-branch: 'master'
-        commit-message: 'Image Upload :mag:'
-        force-add: 'true'
+        yarn start
+    # - name: Git commit and push
+    #   uses: github-actions-x/commit@master
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     push-branch: 'master'
+    #     commit-message: 'Image Upload :mag:'
+    #     force-add: 'true'
