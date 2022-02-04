@@ -3,15 +3,12 @@ const path = require('path');
 const axios = require('axios');
 const sharp = require('sharp');
 const Instagram = require('instagram-web-api')
-const FileCookieStore = require('tough-cookie-filestore2');
 
 // Collect Username and Password from Github's variables as arguments
 const username = process.env.INSTAGRAM_USERNAME;
-const password = process.env.INSTAGRAM_PASSWORD;
+const password = process.INSTAGRAM_PASSWORD;
 
-// Saving Cookies for skipping login next time
-const cookieStore = new FileCookieStore(path.join('./', 'cookies.json'));
-const client = new Instagram({ username, password, cookieStore });
+const client = new Instagram({ username, password });
 
 // NASA API
 const api = 'https://api.nasa.gov/planetary/apod?api_key=NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo';
@@ -49,7 +46,8 @@ const getData = async url => {
 };
 
 ;(async () => {
-  await client.login()
+  let res = await client.login()
+  console.log(res);
 
   getData(api).then(res => {
   var data = res;
@@ -59,7 +57,7 @@ const getData = async url => {
   var post = async (data, mTags) => {
     await client.login();
 
-    var photo = data.hdurl;
+    var photo = data.url;
     let caption = '';
 
     if (data.title) caption += data.title + '\n\n';
@@ -69,19 +67,20 @@ const getData = async url => {
     caption += mTags;
 
     download({
-      uri: photo,
+      uri: data.url,
       filename: 'nasa.jpg',
     })
 
-    await sharp(path.join('./', 'images', 'nasa.jpg'))
+    await sharp('./images/nasa.jpg')
       .resize(1696, 1064)
       .jpeg({ mozjpeg: true })
       .toBuffer()
       .then(async data => {
           let {res} =  await client.uploadPhoto({
-          photo: path.join('./', 'images', 'nasa.jpg'),
+          photo: './images/nasa.jpg',
           caption
         });
+        console.log(res);
       })
     .catch( err => console.log(err));
   }
