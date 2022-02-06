@@ -7,7 +7,7 @@ const FileCookieStore = require('tough-cookie-filestore2');
 
 // Collect Username and Password from Github's variables as arguments
 const username = process.env.INSTAGRAM_USERNAME;
-const password = process.INSTAGRAM_PASSWORD;
+const password = process.env.INSTAGRAM_PASSWORD;
 
 // Saving Cookies for skipping login next time
 const cookieStore = new FileCookieStore(path.join('./', 'cookies.json'));
@@ -29,7 +29,7 @@ const download = async ({ uri, filename }) => {
   });
 
   let ext = path.extname(uri);
-  let location = path.resolve(__dirname, 'images', filename + ext);
+  let location = path.resolve(__dirname, 'images', filename + '.jpg');
   console.log(location);
 
   await res.data.pipe(fs.createWriteStream(location))
@@ -70,18 +70,22 @@ const post = async ({ data, mTags, credit }) => {
   caption += mTags;
 
   let ext = path.extname(photo);
-  let location = path.resolve(__dirname, 'images', 'nasa' + ext);
+  let location = path.resolve(__dirname, 'images', 'nasa.jpg');
 
   await download({
     uri: photo,
     filename: 'nasa',
   })
 
-  let { res } = await client.uploadPhoto({
-    photo: location,
-    caption
-  });
-  console.log(Object.keys(res.data.body));
+  try {
+    let { res } = await client.uploadPhoto({
+      photo: location,
+      caption
+    });
+    console.log(Object.keys(res));
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 ;(async () => {
