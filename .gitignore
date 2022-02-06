@@ -1,3 +1,4 @@
 node*
 *.env
 *.lock
+cookies.json
