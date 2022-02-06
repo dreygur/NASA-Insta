@@ -2,7 +2,7 @@ name: Instagram Post JS
 
 on:
   schedule:
-  - cron: 10 7 * * *
+  - cron: 41 21 * * *
 
 env:
   INSTAGRAM_USERNAME: ${{ secrets.user }}
