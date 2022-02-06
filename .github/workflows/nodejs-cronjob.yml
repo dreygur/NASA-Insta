@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: js-dev
+        ref: javascript
     - name: gh-actions-nodejs
       uses: Slishee/gh-actions-nodejs@0.0.2
     - name: Post to Instagram
