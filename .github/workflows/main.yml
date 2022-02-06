@@ -3,6 +3,7 @@ name: Instagram Post JS
 on:
   schedule:
   - cron: 41 21 * * *
+  workflow_dispatch:
 
 env:
   INSTAGRAM_USERNAME: ${{ secrets.user }}
