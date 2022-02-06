@@ -16,17 +16,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: javascript
+        ref: main
     - name: gh-actions-nodejs
       uses: Slishee/gh-actions-nodejs@0.0.2
     - name: Post to Instagram
       run: |
         yarn
         yarn start
-    # - name: Git commit and push
-    #   uses: github-actions-x/commit@master
-    #   with:
-    #     github-token: ${{ secrets.GITHUB_TOKEN }}
-    #     push-branch: 'master'
-    #     commit-message: 'Image Upload :mag:'
-    #     force-add: 'true'
