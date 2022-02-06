@@ -82,7 +82,7 @@ const post = async ({ data, mTags, credit }) => {
       photo: location,
       caption
     });
-    console.log(Object.keys(res));
+    console.log(res);
   } catch (e) {
     console.log(e);
   }
