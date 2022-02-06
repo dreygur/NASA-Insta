@@ -17,8 +17,8 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: main
-    - name: gh-actions-nodejs
-      uses: Slishee/gh-actions-nodejs@0.0.2
+    - name: Github Actions Yarn
+      uses: dreygur/github-actions-yarn@1.0.1
     - name: Post to Instagram
       run: |
         yarn
