@@ -2,7 +2,7 @@ name: Instagram Post JS
 
 on:
   schedule:
-  - cron: '6 6 * * *'
+  - cron: '29 7 * * *'
   workflow_dispatch:
 
 env:
