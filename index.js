@@ -69,17 +69,17 @@ const post = async ({ data, mTags, credit }) => {
   caption += credit + '\n\n';
   caption += mTags;
 
-  let ext = path.extname(photo);
-  let location = path.resolve(__dirname, 'images', 'nasa.jpg');
+  // let ext = path.extname(photo);
+  // let location = path.resolve(__dirname, 'images', 'nasa.jpg');
 
-  await download({
-    uri: photo,
-    filename: 'nasa',
-  })
+  // await download({
+  //   uri: photo,
+  //   filename: 'nasa',
+  // })
 
   try {
     let { res } = await client.uploadPhoto({
-      photo: location,
+      photo: photo,
       caption
     });
     console.log(res);
@@ -89,8 +89,7 @@ const post = async ({ data, mTags, credit }) => {
 }
 
 ;(async () => {
-  let res = await client.login()
-  // console.log(res);
+  await client.login()
 
   getData(api)
     .then(async res => {
