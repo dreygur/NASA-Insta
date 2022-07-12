@@ -59,17 +59,15 @@ const getData = async url => {
 };
 
 
-const post = async ({ data, mTags, credit }) => {
-  // await client.login();
-
-  var photo = data.url;
+const post = async ({ data, tags, credit }) => {
+  let photo = data.url;
   let caption = '';
 
   if (data.title) caption += data.title + '\n\n';
   if (data.explanation) caption += data.explanation + '\n\n';
-  if (data.copyright) caption += 'Copyright ' + data.copyright + '\n\n';
+  if (data.copyright) caption += 'Copyright: ' + data.copyright + '\n\n';
   caption += credit + '\n\n';
-  caption += mTags;
+  caption += tags;
 
   await download({
     uri: photo,
@@ -92,8 +90,8 @@ const post = async ({ data, mTags, credit }) => {
 
   let data = await getData(api);
   let credit = `\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/.This System is developed by @drreygur`;
-  let mTags = '#astronomy #space #nasa #universe #astrophotography #science #cosmos #moon #stars #galaxy #astrophysics #nightsky #photography #physics #milkyway #spacex #cosmology #astro #earth #astronomia #sky #nature #telescope #astronaut #nightphotography #solarsystem #night #planets #mars #bhfyp';
+  let tags = '#astronomy #space #nasa #universe #astrophotography #science #cosmos #moon #stars #galaxy #astrophysics #nightsky #photography #physics #milkyway #spacex #cosmology #astro #earth #astronomia #sky #nature #telescope #astronaut #nightphotography #solarsystem #night #planets #mars #bhfyp';
 
-  let res = await post({ data, mTags, credit });
+  let res = await post({ data, tags, credit });
   console.log(res);
 })();
