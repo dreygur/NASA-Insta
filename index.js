@@ -2,15 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const sharp = require('sharp');
-const Instagram = require('instagram-web-api')
 const FileCookieStore = require('tough-cookie-filestore2');
+const Instagram = require('./instagram');
+
+// require('dotenv').config();
 
 // Collect Username and Password from Github's variables as arguments
 const username = process.env.INSTAGRAM_USERNAME;
 const password = process.env.INSTAGRAM_PASSWORD;
 
 // Saving Cookies for skipping login next time
-const cookieStore = new FileCookieStore(path.join('./', 'cookies.json'));
+const cookieStore = new FileCookieStore(path.join(__dirname, 'cookies.json'));
 const client = new Instagram({ username, password, cookieStore });
 
 // NASA API
@@ -29,7 +31,7 @@ const download = async ({ uri, filename }) => {
   });
 
   let ext = path.extname(uri);
-  let location = path.resolve(__dirname, 'images', filename + '.jpg');
+  let location = path.join(__dirname, 'images', filename + '.jpg');
   console.log(location);
 
   await res.data.pipe(fs.createWriteStream(location))
@@ -69,13 +71,10 @@ const post = async ({ data, mTags, credit }) => {
   caption += credit + '\n\n';
   caption += mTags;
 
-  // let ext = path.extname(photo);
-  // let location = path.resolve(__dirname, 'images', 'nasa.jpg');
-
-  // await download({
-  //   uri: photo,
-  //   filename: 'nasa',
-  // })
+  await download({
+    uri: photo,
+    filename: data?.date,
+  })
 
   try {
     let { res } = await client.uploadPhoto({
@@ -88,15 +87,13 @@ const post = async ({ data, mTags, credit }) => {
   }
 }
 
-;(async () => {
+(async () => {
   await client.login()
 
-  getData(api)
-    .then(async res => {
-      var data = res;
-      let credit = `\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/.This System is developed by @drreygur`;
-      let mTags = '#astronomy #space #nasa #universe #astrophotography #science #cosmos #moon #stars #galaxy #astrophysics #nightsky #photography #physics #milkyway #spacex #cosmology #astro #earth #astronomia #sky #nature #telescope #astronaut #nightphotography #solarsystem #night #planets #mars #bhfyp';
+  let data = await getData(api);
+  let credit = `\n\nThis is an auto-generated and auto-published post.The pictures and captions are taken from the NASA API https://api.nasa.gov/.This System is developed by @drreygur`;
+  let mTags = '#astronomy #space #nasa #universe #astrophotography #science #cosmos #moon #stars #galaxy #astrophysics #nightsky #photography #physics #milkyway #spacex #cosmology #astro #earth #astronomia #sky #nature #telescope #astronaut #nightphotography #solarsystem #night #planets #mars #bhfyp';
 
-      await post({ data, mTags, credit });
-    });
+  let res = await post({ data, mTags, credit });
+  console.log(res);
 })();
